@@ -1,0 +1,15 @@
+@import '../../../@theme/styles/themes';
+
+$shadow-green: #00977e;
+
+@include nb-install-component() {
+  .progress-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+}

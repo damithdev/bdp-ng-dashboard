@@ -1,0 +1,31 @@
+<nb-card size="medium">
+
+  <nb-card-header>
+    <span>Matches Played in each City</span>
+  </nb-card-header>
+
+  <nb-list class="user-activity-list">
+    <nb-list-item *ngFor="let item of data">
+      <div class="col-xxl-12">
+        <div class="row">
+
+          <div class="col-xxl-6">
+            <div class="visited-pages-count">
+              <div class="caption">City</div>
+              <div>{{ item[0] }}</div>
+            </div>
+          </div>
+          <div class="col-xxl-6">
+            <div class="visited-pages-count">
+              <div class="caption">Matches Played</div>
+              <div class="value">{{ item[1] }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </nb-list-item>
+  </nb-list>
+
+</nb-card>

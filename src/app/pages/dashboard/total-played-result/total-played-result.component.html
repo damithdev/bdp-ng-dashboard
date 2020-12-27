@@ -1,0 +1,8 @@
+<div class="progress-info" *ngFor="let item of data">
+  <nb-card>
+    <nb-card-header>{{ item[0] }}</nb-card-header>
+    <nb-card-body>
+      <div class="h3">{{ item[1] | ngxNumberWithCommas }}</div>
+    </nb-card-body>
+  </nb-card>
+</div>
