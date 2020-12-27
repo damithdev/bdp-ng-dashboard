@@ -207,8 +207,8 @@ export const DEFAULT_THEME = {
       firstLineShadow: 'rgba(0, 0, 0, 0)',
 
       // second bar
-      secondLineGradFrom: baseThemeVariables.primary,
-      secondLineGradTo: baseThemeVariables.primary,
+      secondLineGradFrom: 'rgba(214, 48, 49,0.5)',
+      secondLineGradTo: 'rgba(214, 48, 49,1.0)',
       secondLineShadow: 'rgba(0, 0, 0, 0)',
 
       // third bar

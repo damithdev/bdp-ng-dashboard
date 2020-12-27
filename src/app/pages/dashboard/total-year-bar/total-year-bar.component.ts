@@ -1,5 +1,6 @@
 import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
 import {NbThemeService} from '@nebular/theme';
+import {FileioService} from '../fileio.service';
 
 @Component({
   selector: 'ngx-total-year-bar',
@@ -10,11 +11,19 @@ import {NbThemeService} from '@nebular/theme';
 export class TotalYearBarComponent implements AfterViewInit, OnDestroy {
   options: any = {};
   themeSubscription: any;
+  data: string[][];
 
-  constructor(private theme: NbThemeService) {
+  constructor(private theme: NbThemeService, private fileioService: FileioService) {
   }
 
-  ngAfterViewInit() {
+  getData() {
+    this.fileioService.readCSVFileTranspose('assets/data/histogram.csv', (data) => {
+      this.data = data;
+      this.doLoadChart(data);
+    });
+  }
+
+  doLoadChart(data) {
     this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
 
       const colors: any = config.variables;
@@ -38,7 +47,7 @@ export class TotalYearBarComponent implements AfterViewInit, OnDestroy {
         xAxis: [
           {
             type: 'category',
-            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            data: data[1],
             axisTick: {
               alignWithLabel: true,
             },
@@ -78,8 +87,8 @@ export class TotalYearBarComponent implements AfterViewInit, OnDestroy {
           {
             name: 'Score',
             type: 'bar',
-            barWidth: '60%',
-            data: [10, 52, 200, 334, 390, 330, 220],
+            barWidth: '80%',
+            data: data[2],
           },
         ],
       };
@@ -88,5 +97,9 @@ export class TotalYearBarComponent implements AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.themeSubscription.unsubscribe();
+  }
+
+  ngAfterViewInit(): void {
+    this.getData();
   }
 }

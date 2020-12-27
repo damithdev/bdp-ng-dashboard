@@ -1,5 +1,6 @@
 import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
 import {NbThemeService} from '@nebular/theme';
+import {FileioService} from '../fileio.service';
 
 @Component({
   selector: 'ngx-more-type-pie',
@@ -10,11 +11,19 @@ import {NbThemeService} from '@nebular/theme';
 export class MoreTypePieComponent implements AfterViewInit, OnDestroy {
   options: any = {};
   themeSubscription: any;
+  data: string[][];
 
-  constructor(private theme: NbThemeService) {
+  constructor(private theme: NbThemeService, private fileioService: FileioService) {
   }
 
-  ngAfterViewInit() {
+  getData() {
+    this.fileioService.readCSVFile('assets/data/countrypercentagetype.csv', (data) => {
+      this.data = data;
+      this.doLoadData(data);
+    });
+  }
+
+  doLoadData(data) {
     this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
 
       const colors = config.variables;
@@ -22,7 +31,7 @@ export class MoreTypePieComponent implements AfterViewInit, OnDestroy {
 
       this.options = {
         backgroundColor: echarts.bg,
-        color: [colors.warningLight, colors.infoLight, colors.dangerLight, colors.successLight, colors.primaryLight],
+        color: [colors.warningLight, colors.infoLight],
         tooltip: {
           trigger: 'item',
           formatter: '{a} <br/>{b} : {c} ({d}%)',
@@ -30,7 +39,7 @@ export class MoreTypePieComponent implements AfterViewInit, OnDestroy {
         legend: {
           orient: 'vertical',
           left: 'left',
-          data: ['USA', 'Germany', 'France', 'Canada', 'Russia'],
+          data: ['Hosted Only One Type', 'Hosted More than One Type'],
           textStyle: {
             color: echarts.textColor,
           },
@@ -42,11 +51,8 @@ export class MoreTypePieComponent implements AfterViewInit, OnDestroy {
             radius: '80%',
             center: ['50%', '50%'],
             data: [
-              { value: 335, name: 'Germany' },
-              { value: 310, name: 'France' },
-              { value: 234, name: 'Canada' },
-              { value: 135, name: 'Russia' },
-              { value: 1548, name: 'USA' },
+              { value: data[1][2], name: 'Hosted Only One Type' },
+              { value: data[0][2], name: 'Hosted More than One Type' },
             ],
             itemStyle: {
               emphasis: {
@@ -77,5 +83,9 @@ export class MoreTypePieComponent implements AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.themeSubscription.unsubscribe();
+  }
+
+  ngAfterViewInit(): void {
+    this.getData();
   }
 }

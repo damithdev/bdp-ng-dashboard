@@ -39,7 +39,6 @@ export class FileioService {
     this.readFile(filePath, function (tsv: string) {
 
       const lines = tsv.split('\n');
-      console.log(lines);
 
       const matrix = lines.filter(function (line) {
         return !(line === '');
@@ -62,6 +61,27 @@ export class FileioService {
         return line.split(',');
       });
       callback(matrix);
+    });
+  }
+
+  public readCSVFileTranspose(filePath: string, callback) {
+    this.readFile(filePath, function (tsv: string) {
+      const lines = tsv.split('\n');
+      const headers = lines.shift();
+      const matrix = lines.filter(function (line) {
+        return line !== '';
+      }).map( line => {
+        return line.split(',');
+      });
+
+      const tmatrix: string[][] = [];
+      for (let j = 0; j < matrix.length ; j++) {
+          for (let i = 0; i < matrix[j].length ; i++) {
+            if (tmatrix[i] === undefined)tmatrix[i] = [];
+            tmatrix[i][j] = matrix[j][i];
+          }
+        }
+      callback(tmatrix);
     });
   }
 
