@@ -7,10 +7,4 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/dashboard',
     home: true,
   },
-  {
-    title: 'ECommerce',
-    icon: 'shopping-cart-outline',
-    link: '/pages/ecommerce',
-    home: true,
-  },
 ];
