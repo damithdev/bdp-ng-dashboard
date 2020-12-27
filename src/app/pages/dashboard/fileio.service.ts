@@ -39,21 +39,30 @@ export class FileioService {
     this.readFile(filePath, function (tsv: string) {
 
       const lines = tsv.split('\n');
+      console.log(lines);
 
       const matrix = lines.filter(function (line) {
-        return !(line === '' || line.includes('\N'));
+        return !(line === '');
 
       }).map( line => {
         return line.split('');
       });
-      console.log(matrix);
 
       callback(matrix);
     });
   }
 
-  public readCSVFile(filePath: string) {
-
+  public readCSVFile(filePath: string, callback) {
+    this.readFile(filePath, function (tsv: string) {
+      const lines = tsv.split('\n');
+      const headers = lines.shift();
+      const matrix = lines.filter(function (line) {
+        return line !== '';
+      }).map( line => {
+        return line.split(',');
+      });
+      callback(matrix);
+    });
   }
 
   public readTSVFile(filePath: string, callback): void {

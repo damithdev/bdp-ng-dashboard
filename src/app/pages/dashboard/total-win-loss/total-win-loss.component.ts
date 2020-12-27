@@ -1,4 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {NbThemeService} from '@nebular/theme';
+import {FileioService} from '../fileio.service';
+import {takeWhile} from 'rxjs/operators';
 
 
 @Component({
@@ -6,15 +9,32 @@ import {Component, Input, OnInit} from '@angular/core';
   templateUrl: './total-win-loss.component.html',
   styleUrls: ['./total-win-loss.component.scss'],
 })
-export class TotalWinLossComponent implements OnInit {
+export class TotalWinLossComponent implements OnDestroy {
 
+  private alive = true;
 
-  constructor() {
+  data: string[][];
 
+  currentTheme: string;
+
+  constructor(private themeService: NbThemeService,
+              private fileioService: FileioService) {
+    this.themeService.getJsTheme()
+      .pipe(takeWhile(() => this.alive))
+      .subscribe(theme => {
+        this.currentTheme = theme.name;
+      });
+
+    this.getData();
   }
 
-  ngOnInit(): void {
-
+  getData() {
+    this.fileioService.readCSVFile('assets/data/total_summary_matches.csv', (data) => {
+      this.data = data;
+    });
   }
 
+  ngOnDestroy() {
+    this.alive = false;
+  }
 }

@@ -3,23 +3,45 @@
   <div class="col-xxl-6">
     <div class="row">
       <div class="col-xxl-6">
-<!--        <ngx-total-played-result></ngx-total-played-result>-->
+        <ngx-total-played-result></ngx-total-played-result>
       </div>
       <div class="col-xxl-6">
-<!--        <ngx-total-played-city></ngx-total-played-city>-->
+        <ngx-total-played-city></ngx-total-played-city>
       </div>
     </div>
 <!--    <ngx-traffic-reveal-card></ngx-traffic-reveal-card>-->
 
   </div>
   <div class="col-xxl-6">
-<!--    <ngx-traffic-reveal-card></ngx-traffic-reveal-card>-->
+    <div class="row">
+      <div class="col-xxl-6">
+        <ngx-top-ten-away-avg-goals></ngx-top-ten-away-avg-goals>
+      </div>
+      <div class="col-xxl-6">
+        <ngx-top-five-lost-most></ngx-top-five-lost-most>
+      </div>
+    </div>
+    <!--    <ngx-traffic-reveal-card></ngx-traffic-reveal-card>-->
+
+  </div>
+</div>
+<div class="row">
+    <div class="col-xxl-6">
+      <ngx-total-win-loss></ngx-total-win-loss>
+    </div>
+  <div class="col-xxl-6">
     <nb-card>
       <nb-card-header>Pie</nb-card-header>
       <nb-card-body>
-<!--        <ngx-pie-chart></ngx-pie-chart>-->
+        <ngx-more-type-pie></ngx-more-type-pie>
       </nb-card-body>
     </nb-card>
   </div>
 </div>
 <ngx-total-home-goals-bar></ngx-total-home-goals-bar>
+<nb-card>
+  <nb-card-header> total number of matches played overtime in year granularity</nb-card-header>
+  <nb-card-body>
+    <ngx-total-year-bar></ngx-total-year-bar>
+  </nb-card-body>
+</nb-card>
